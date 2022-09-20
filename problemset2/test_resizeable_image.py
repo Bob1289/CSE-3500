@@ -25,6 +25,8 @@ class TestImage(unittest.TestCase):
         # Make sure the energy of the seam matches what we expect.
         total = sum([image.energy(coord[0], coord[1]) for coord in seam])
         self.assertEqual(total, expected_cost)
+        
+
             
 if __name__ == '__main__':
     unittest.main(argv = sys.argv + ['--verbose'])

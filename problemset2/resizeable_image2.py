@@ -109,6 +109,8 @@ class ResizeableImage(imagematrix.ImageMatrix):
                     coord.append((min_index, i))
         return coord
 
+
+
+    
     def remove_best_seam(self):
         self.remove_seam(self.best_seam())
-
