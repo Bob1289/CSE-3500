@@ -3,15 +3,25 @@ import sys
 from resizeable_image import ResizeableImage
 
 class TestImage(unittest.TestCase):
-    def test_small(self):
-        self.image_test('sunset_small.png', 23147)
+    # def test_small(self):
+    #     self.image_test('smol.png', 20000)
 
-    def test_large(self):
-        self.image_test('sunset_full.png', 26010)
+    # def test_large(self):
+    #     self.image_test('5x5.png', 23251)
+
+    def test(self):
+        self.image_test('./images/10x10.png', 24505)
+    
+    # def test_a(self):
+    #     self.image_test('./images/20x10.png', 20000)
+
+    # def test_b(self):
+    #     self.image_test('./images/12x12.png', 27930)
+
 
     def image_test(self, filename, expected_cost):
         image = ResizeableImage(filename)
-        seam = image.best_seam()
+        seam = image.best_seam(True)
 
         # Make sure the seam is of the appropriate length.
         self.assertEqual(image.height, len(seam), 'Seam wrong size.')
