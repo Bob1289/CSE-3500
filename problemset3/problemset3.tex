@@ -13,6 +13,32 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
 \hypersetup{%
   colorlinks=true,
   linkcolor=blue,
@@ -87,16 +113,19 @@ This is because for any of these problems, if there is only one element then onl
     where $k$ is the number of levels in the recursion tree. We can now also assume $T(\frac{n}{2^k})$ is trying to reach $1$ which is the base case.
     We now solve for $k$ from $T(\frac{n}{2^k}) = T(1)$ to get 
     $n = 2^k$ which gives us $k = \log_2(n)$. We can now plug this into the equation to get $T(n) = 2^{\log_2(n)}T(1) + n\log_2(n)$ which
-    simplifies down to $T(n) = nT(1) + n\log(n)$ or $T(n) = O(nlog(n))$. This is a top-heavy recusion because the work done at each
-    level is $O(n)$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n\log(n))$.
+    simplifies down to $T(n) = nT(1) + n\log(n)$ or $T(n) = O(nlog(n))$. This would have a even work distribution because as $n$ increases, the
+    amount of work done at each level increases by a constant factor. We can also calculate the recurrence that is equal to 1 meaning that
+    the amount of work is even.
     \item Just like the previous questions, we can create a equation for each level $k$ of the recusion tree by finding what $T(\frac{n}{2})$ is equal to.
     We can do this by dividing $2T(\frac{n}{2})+1$ by 2 which gets us $2T(\frac{n}{2^2})+\frac{1}{2}$. We can then
     then plug this into the original equation of $2T(\frac{n}{2})+1$ to get $2[2T(\frac{n}{2^2}) + \frac{1}{2}] + 1$ which
     simplifies to $2^2T(\frac{n}{2^2}) + 2$. We can repeat this process until we get to $T(n) = 2^kT(\frac{n}{2^k}) + k$
     where $k$ is the number of levels in the recursion tree. We can now also solve for $k$ from $T(\frac{n}{2^k}) = T(1)$ to get
     $n = 2^k$ which gives us $k = \log_2(n)$. We can now plug this into the equation to get $T(n) = 2^{\log_2(n)}T(1) + n$ which
-    simplifies down to $T(n) = nT(1) + n$ or $T(n) = O(n)$. This is a top-heavy recusion because the work done at each
-    level is $O(1)$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n)$.
+    simplifies down to $T(n) = nT(1) + n$ or $T(n) = O(n)$. This is a bottom-heavy recusion because the work done at each
+    level is $O(1)$ and the number of levels is $O(\log(n))$. This means that there is more work done on the bottom/last levels,
+    rather than the top with the total work done being $O(n)$. We can also check to see that the recurrence relation is greater than 1
+    meaning that the work done at each level is greater than the work done at the previous level.
     \item This question is similar to the previous two questions. We can create a equation for each level $k$ of the recusion tree by finding what $T(\frac{n}{2})$ is equal to.
     We can do this by dividing $7T(\frac{n}{2})+n^3$ by 2 which gets us $7T(\frac{n}{2^2})+\frac{n^3}{2}$. We can then
     then plug this into the original equation of $7T(\frac{n}{2})+n^3$ to get $7[7T(\frac{n}{2^2}) + \frac{n^3}{2}] + n^3$ which
@@ -104,7 +133,7 @@ This is because for any of these problems, if there is only one element then onl
     where $k$ is the number of levels in the recursion tree. We can now also solve for $k$ from $T(\frac{n}{2^k}) = T(1)$ to get 
     $n = 2^k$ which gives us $k = \log_2(n)$. We can now plug this into the equation to get $T(n) = 7^{\log(n)}T(1) + 7^{\log(n)-1}(\frac{n^3}{2^{\log(n)-1}})+ ... 7(\frac{n^3}{2}) + n^3$ which
     simplifies down to $T(n) = n^{\log_2(7)}T(1) + n^3$ or $T(n) = O(n^3)$. This is a top-heavy recusion because the work done at each
-    level is $O(n^3)$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n^3)$.
+    level is $O(n^3)$ which heavily outweights $n^{\log_2(7)}$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n^3)$.
     \item This problem is similar to the previous question. We can create a equation for each level $k$ of the recusion tree by finding what $T(\frac{n}{2})$ is equal to.
     We can do the same process as the previous question by dividing by 2 then plugging it back into the original equation. For this case for $T(\frac{n}{2})$
     we get $7T(\frac{n}{2^2}) + \frac{n^2}{2}$ and once we plug this into the original equation we get $7[7T(\frac{n}{2^2}) + \frac{n^2}{2}] + n^2$ which
@@ -112,15 +141,16 @@ This is because for any of these problems, if there is only one element then onl
     where $k$ is the number of levels in the recursion tree. We can now also solve for $k$ from $T(\frac{n}{2^k}) = T(1)$ to get 
     $n = 2^k$ which gives us $k = \log_2(n)$. We can now plug this into the equation to get $T(n) = 7^{\log(n)}T(1) + 7^{\log(n)-1}(\frac{n^2}{2^{\log(n)-1}})+ ... 7(\frac{n^2}{2}) + n^2$ which
     simplifies down to $T(n) = n^{\log_2(7)}T(1) + n^2$. If we solve out $n^{\log_2(7)}$ we get $n^{2.81}$ which grows faster than $n^2$ so we can say that this is exactly
-    $T(n) = O(n^{\log_2(7)})$. This is a top-heavy recusion because the work done at each 
-    level is $O(n^{\log_2(7)})$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n^{\log_2(7)})$.
+    $T(n) = O(n^{\log_2(7)})$. This is a bottom-heavy recusion because the work done as $O(n^{\log_2(7)})$ overweighs
+    $n^2$ at higher levels making the total work done $O(n^{\log_2(7)})$.
     \item Like all the previous questions, we can create a equation for each level $k$ of the recusion tree by finding what $T(\frac{n}{2})$ is equal to.
     We first divide $4T(\frac{n}{2})+n^2\sqrt{n}$ by 2 to get $4T(\frac{n}{2^2}) + \frac{n^2\sqrt{n}}{2}$. 
     We can then plug this into the original equation of $4T(\frac{n}{2})+n^2\sqrt{n}$ to get $4[4T(\frac{n}{2^2}) + \frac{n^2\sqrt{n}}{2}] + n^2\sqrt{n}$ which
     simplifies to $4^2T(\frac{n}{2^2}) + 3n^2\sqrt{n}$. We can repeat this process $k$ times until we get to $T(n) = 4^kT(\frac{n}{2^k}) + (2^k-1)n^2\sqrt{n}$.
     We can now also solve for $k$ from $T(\frac{n}{2^k}) = T(1)$ to get $n = 2^k$ which gives us $k = \log_2(n)$. We can now plug this into the equation to get $T(n) = 4^{\log(n)}T(1) + (2^{\log_2(n)}-1)n^2\sqrt{n}$ which
     simplifies down to $T(n) = n^{\log_2(4)}T(1) + (2^{\log_2(n)}-1)n^2\sqrt{n}$. If we solve out $n^{\log_2(4)}$ and $2^{\log_2(n)}-1$ we get $n^2$ and $n-1$ respectively.
-    This means that $T(n) = O(n^2\sqrt{n})$ because $n^2\sqrt{n}$ grows faster than $n^2$. This is a top-heavy recusion because the work done at each level is $O(n^2\sqrt{n})$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n^2\sqrt{n})$.
+    This means that $T(n) = O(n^2\sqrt{n})$ because $n^2\sqrt{n}$ grows faster than $n^2$. This is a top-heavy recusion because the work done at each level is $O(n^2\sqrt{n})$ 
+    is much larger than $n^2$. This means that the total work done is $O(n^2\sqrt{n})$.
     \item This question follows the same principle as the previous questions. We can create a equation for each level $k$ of the recusion tree by finding what $T(\frac{n}{2})$ is equal to.
     We first divide $4T(\frac{n}{2})+n\log_2n$ by 2 to get $4T(\frac{n}{2^2}) + \frac{n\log_2n}{2}$. We can then plug this into the original equation of $4T(\frac{n}{2})+n\log_2n$ to get $4[4T(\frac{n}{2^2}) + \frac{n\log_2n}{2}] + n\log_2n$ which
     simplifies to $4^2T(\frac{n}{2^2}) + nlog_2n^2 + n\log_2n$. We can repeat this process $k$ times until we get to $T(n) = 4^kT(\frac{n}{2^k}) + n\log_2n^{2^{k-1}} ... n\log_2n$. 
@@ -128,7 +158,8 @@ This is because for any of these problems, if there is only one element then onl
     We can now plug this into the equation to get $T(n) = 4^{\log(n)}T(1) + n\log_2n^{2^{\log_2(n)-1}} ... n\log_2n$ which
     simplifies down to $T(n) = n^{\log_2(4)}T(1) + n\log_2n^{2^{\log_2(n)-1}} ... n\log_2n$. 
     In this case if we solve out $n^{\log_2(4)}$ and $n\log_2n^{2^{\log_2(n)-1}}$ we get $n^2$ and $n\log_2n$ respectively.
-    This means that $T(n) = O(n^2)$ as $n^2$ grows faster than $n\log_2n$. This is a top-heavy recusion because the work done at each level is $O(n^2)$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n^2)$.
+    If we compare $n^2$ and $n\log_2n$ we can see that $n^2$ grows faster than $n\log_2n$.
+    This means that $T(n) = O(n^2)$ as $n^2$ grows faster than $n\log_2n$. This is a bottom-heavy recusion because the work done at each level is $O(n^2)$ and the number of levels is $O(\log(n))$. This means that the total work done is $O(n^2)$.
     
 \end{enumerate}
 
@@ -190,7 +221,45 @@ algorithm of splitting the board up. The algorithm is as follows:
     \item Fill the board with the corresponding piece for each subproblem.
 \end{enumerate}
 This algorithm is correct because we are just creating smaller and smaller subproblems that 
-simulate the base case of a 2x2 board.
+simulate the base case of a 2x2 board. This algorithm would have a time complexity of $O(n^2)$
+because as we split the board we have to fill the board with a time complexity of $O(n^2)$ for each
+subproblem. This means that the total time complexity is $O(n^2)$.
+
+\begin{lstlisting}[language=Python]
+# Create a 2^k x 2^k board
+k = int(input('Enter a value for k: '))
+board = [[0 for _ in range(2**k)] for _ in range(2**k)]
+
+# remove the top left corner square
+board[0][0] = -1
+
+def fill_board(board, i, j, size):
+    # base case
+    # if the size of the board is 2x2, place the L-shaped pieces
+    if size == 2:
+        # place the L-shaped pieces in remaining squares
+        return
+
+    # place L-shaped piece in the middle of the board
+    board[i+size//2][j+size//2] = 1
+    board[i+size//2-1][j+size//2] = 1
+    board[i+size//2-1][j+size//2-1] = 1
+
+    # recursively solve the problem for each quadrant
+    fill_board(board, i, j, size//2)
+    fill_board(board, i+size//2, j, size//2)
+    fill_board(board, i, j+size//2, size//2)
+    fill_board(board, i+size//2, j+size//2, size//2)
+
+fill_board(board, 0, 0, 2**k)
+
+\end{lstlisting}
+
+
+\includegraphics[width=0.3\textwidth]{images/1.code1.png}
+\includegraphics[width=0.3\textwidth]{images/1.code2.png}
+\includegraphics[width=0.3\textwidth]{images/1.code3.png}
+
 
 \pagebreak
 
@@ -200,27 +269,27 @@ You are given an unsorted list $L$ that has $k \ge 0$ pairs of indices $i < j$ s
 These are called $inverted$ $pairs$. Develop an $O(n log n)$ algorithm that counts the number of
 inverted pairs (i.e. compute the value $k$).
 
+We can solve this problem with a well known algorithm called merge sort.
+Merge sort can be used to sort a list in $O(n log n)$ time. We can use this
+algorithm to count the number of inverted pairs. We can first split the list
+into multiple sublists of size 1. We can then merge the sublists together in
+order. If we merge two sublists together, we can count the number of inverted
+pairs per merge. Each merge would create a list that we can go through and count
+the number of inverted pairs. After we merge that layer of sublists, we can
+merge the next layer of sublists. We can repeat this process until we have
+merged all the sublists together. This means that we can count the number of
+inverted pairs in $O(n log n)$ time. The algorithm is as follows:
 \begin{enumerate}
-    \item First we can think about how we can count the number of inverted pairs. We can do this by
-    using a merge sort algorithm. We can start by splitting the list into two equal parts. We can then
-    recursively call the merge sort algorithm on each half of the list. We can now merge the two lists
-    together by comparing the first element of each list. We can now see that if the first element of the
-    first list is greater than the first element of the second list, then we can see that all the elements
-    in the second list are greater than the first element of the first list. This means that we can add
-    the number of elements in the second list to the number of inverted pairs. We can now add the smaller
-    element to the merged list and remove it from the original list. We can now repeat this process until
-    we have merged the two lists together. We can now see that we can count the number of inverted pairs
-    by using a merge sort algorithm. This means that we can solve this problem by using a merge sort algorithm.
-    \item We can now think about how we can implement a merge sort algorithm. We can start by splitting the list
-    into two equal parts. We can then recursively call the merge sort algorithm on each half of the list. We can now
-    merge the two lists together by comparing the first element of each list. We can now see that if the first element
-    of the first list is greater than the first element of the second list, then we can see that all the elements in the
-    second list are greater than the first element of the first list. This means that we can add the number of elements
-    in the second list to the number of inverted pairs. We can now add the smaller element to the merged list and remove
-    it from the original list. We can now repeat this process until we have merged the two lists together. We can now see
-    that we can count the number of inverted pairs by using a merge sort algorithm. This means that we can solve this problem
-    by using a merge sort algorithm.
+    \item Split the list into sublists of size 1.
+    \item Merge the sublists together in order.
+    \item Iterate through each list and count the number of inverted pairs per merge.
+    \item Repeat steps 2 and 3 until we have merged all the sublists together.
 \end{enumerate}
+
+The time complexity of this algorithm is $O(n log n)$ because we are splitting the list into sublists
+of size 1 and then merging the sublists together in order. This means that we are splitting the list
+into sublists of size 1 in $O(n)$ time and then merging the sublists together in order in $O(n log n)$
+time. This means that the total time complexity is $O(n log n)$.
 
 \pagebreak
 
@@ -239,15 +308,36 @@ then the output is $x_4 + x_5 + x_6 + x_7 = 8 - 4 + 3 + 6 = 13.$
     runtime. Argue why your algorithm is correct and has $O(n)$ runtime.}
 \end{enumerate}
 
+\textbf{Solution:}
 \begin{enumerate}
-    \item We can solve this problem by using a dynamic programming algorithm. We can start by creating a list 
-    of the same size as the input list. We can now set the first element of the list to the first element of the 
-    input list. We can now iterate through the input list and set the current element of the list to the maximum of 
-    the current element of the list and the current element of the input list plus the previous element of the list. 
-    We can now iterate through the list and find the maximum element of the list. This is the maximum sum of the subarray. 
-    This means that we can solve this problem by using a dynamic programming algorithm.
-    \item We can now think about how we can implement a dynamic programming algorithm. We can start by creating a list 
-    
+    \item We can create a O(n) algorithm for the best subset middle problem by splitting the list into two sublists. 
+    We can then find the maximum value of the first sublist and the maximum value of the second sublist using pointers.
+    As we iterate through each sublist, we can keep track of the maximum value and the index of the maximum value for each sublist.
+    We can then add the maximum value of the first sublist and the maximum value of the second sublist to find the maximum value of the
+    first sublist and the second sublist combined. We are basically finding the maximum value of the first sublist and the maximum value of the second sublist
+    from the middle of the list. If we find a value that is greater than the maximum value of the first sublist and the maximum value of the second sublist combined,
+    we can update the maximum value of the first sublist and the maximum value of the second sublist combined. We can repeat this process until we have iterated
+    through the entire list. This means that we can find the maximum value of the first sublist and the maximum value of the second sublist combined in $O(n)$ time.
+    \item We can design a recursive algorithm for the best subset problem with runtime $O(n log n)$ that uses the BSM function. 
+    Since we have already created an algorithm for the BSM problem that has runtime $O(n)$, we can use this algorithm to solve the best subset problem.
+    We can format this like a divide and conquer algorithm. We can keep splitting the list into two sublists until we have a list of size 1.
+    We can then merge the sublists together in order. Each merge would create a list that we can go through and find the maximum value of the sublist.
+    After we merge that layer of sublists, we can merge the next layer of sublists, if that layer has a greater value than the previous layer then 
+    we can update the maximum value of the sublist. We can repeat this process until we have merged all the sublists together. This means that we can find the maximum value of the sublist in $O(n log n)$ time
+    as we are iterating through each sublist with a runtime of $O(n)$ and then merging the sublists together in order in $O(n log n)$ time.
+    \item We can prove that our algorithm is indeed correct and prove the runtime is $O(n log n)$. We can prove that our algorithm is correct by
+    showing that the algorithm is a divide and conquer algorithm, and behaves similarly to merge sort. We split the problem into subproblems,
+    of smaller lists of size 1. By splitting the problem into subproblems, there are going to be $O(log n)$ subproblems. 
+    At each level there is going to be $O(n)$ work to do. This means that with each level along with the total amount of levels,
+    we are going to have $O(n log n)$ work to do. This means that the runtime is $O(n log n)$.
+    \item We can design an algorithm for the best subset problem that has $O(n)$ runtime. We can use a algorithm called
+    Kadane's algorithm to solve this problem. We can iterate through the list and keep track of a current maximum value and a global maximum value.
+    We can then update the current maximum value by adding the current value to the current maximum value. If the current maximum value is less than the current value,
+    we can update the current maximum value to the current value. We can then update the global maximum value by comparing the current maximum value to the global maximum value.
+    We can repeat this process until we have iterated through the entire list. This means that we can find the maximum value of the sublist in $O(n)$ time.
+
+
+
 \end{enumerate}
 
 \end{document}
