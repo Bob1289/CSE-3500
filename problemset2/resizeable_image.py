@@ -10,7 +10,7 @@ class ResizeableImage(imagematrix.ImageMatrix):
     def dp_seam(self):
         coord = [] # initialize the list of coordinates
         dp = [[0 for i in range(self.width)] for j in range(self.height)] # create a 2D array of 0s
-
+        # This part of the function fills the 2D array with the energy of the pixels
         for i in range(self.height): # iterate through the height
             for j in range(self.width): # iterate through the width
                 if i == 0: # if we are at the top row
@@ -23,10 +23,12 @@ class ResizeableImage(imagematrix.ImageMatrix):
                     else: # if we are in the middle
                         dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1]) # set the value of the 2D array to the minimum of the three pixels above it
                     dp[i][j] += self.energy(j, i) # add the energy of the pixel to the value of the 2D array
-                        
+
+        # This part of the function finds the minimum energy of the bottom row  
         start_index = dp[self.height-1].index(min(dp[self.height-1])) # find the index of the minimum value in the bottom row
         coord.append((start_index, self.height-1)) # add the coordinates of the minimum value to the list of coordinates
 
+        # This part of the function finds the path of the minimum energy
         while coord[-1][1] != 0: # while we are not at the top row
             i = coord[-1][1] # set i to the y coordinate of the last pixel in the list of coordinates
             j = coord[-1][0] # set j to the x coordinate of the last pixel in the list of coordinates
